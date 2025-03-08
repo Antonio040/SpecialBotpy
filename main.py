@@ -5,7 +5,7 @@ from discord.ext.commands import check_any
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from responses import get_response
-from math import sqrt
+import datetime
 
 # load token to save place
 load_dotenv()
@@ -46,6 +46,18 @@ async def on_message(message: Message) -> None:
 
     if message.channel.id not in ALLOWED_CHANNELS:
         return
+
+    if message.content == 'kys':
+        if message.author.id == ADMIN: await message.channel.send('I would listen to what my master says....')
+        else: await message.channel.send(f'no u kys {message.author.mention}')
+        return
+
+    if "good night" or "gn" in message.content.lower():
+        current_hour = datetime.datetime.now().hour
+        if current_hour <= 23:  # Before 10 PM
+            await message.channel.send("So early? 😲")
+        else: # After 10 PM
+            await message.channel.send("Good night! :heart_on_fire:")
 
     if message.author.id == ADMIN and message.content == 'die':
         await message.channel.send('meanie :(')
